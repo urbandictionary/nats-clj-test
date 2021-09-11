@@ -7,7 +7,8 @@
 (defn -main
   [& args]
   (with-open [connection (Nats/connect)]
-    (.publish connection "subject" (.getBytes "hello world" StandardCharsets/UTF_8))))
+    (doseq [i (range 0 1000)]
+      (.publish connection "subject" (.getBytes (str "hello world " i) StandardCharsets/UTF_8)))))
 
 (defn incoming
   [& args]
