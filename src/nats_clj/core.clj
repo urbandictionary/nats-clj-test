@@ -1,7 +1,9 @@
 (ns nats-clj.core
-  (:gen-class))
+  (:gen-class)
+  (:import (io.nats.client Nats)
+           (java.nio.charset StandardCharsets)))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (with-open [connection (Nats/connect)]
+    (.publish connection "subject" (.getBytes "hello world" StandardCharsets/UTF_8))))
